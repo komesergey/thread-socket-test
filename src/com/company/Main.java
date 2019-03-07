@@ -19,7 +19,6 @@ public class Main {
 
     private static final int endPort = 50_000;
 
-
     private static String getClassPathFromParent() {
         return System.getProperty("java.class.path", "./*");
     }
@@ -38,23 +37,14 @@ public class Main {
 
         System.out.println("Child processes will be spawned (4000 threads each): " + childProcessesCount);
 
-        int lastProcess = (endPort - startPort) % 4_000;
-
-        System.out.println("Last processes thread count: " + lastProcess);
-
         ArrayList<Process> childs = new ArrayList<>();
 
-        for(int i = 0; i < childProcessesCount; i++){
+        for(int i = 0; i < (endPort - startPort) / 4_000; i++){
             final ProcessBuilder proc = new ProcessBuilder(javaCmd, "-cp", classpath, Child.class.getName(), "servicePort:65000", "startPort:" + (startPort + i * 4000), "count:4000");
             proc.redirectErrorStream(true);
             proc.redirectOutput(ProcessBuilder.Redirect.INHERIT);
             childs.add(proc.start());
         }
-
-        final ProcessBuilder proc = new ProcessBuilder(javaCmd, "-cp", classpath, Child.class.getName(), "servicePort:65000", "startPort:" + (startPort + childProcessesCount * 4000), "count:" + lastProcess);
-        proc.redirectErrorStream(true);
-        proc.redirectOutput(ProcessBuilder.Redirect.INHERIT);
-        childs.add(proc.start());
 
         new Thread(() -> {
             Socket s;
