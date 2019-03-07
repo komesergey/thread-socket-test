@@ -32,8 +32,8 @@ public class Child {
         for(int i = 0; i < count; i++){
             Runnable runnable = () -> {
                 Socket s;
+                int port = ports.getAndIncrement();
                 try{
-                    int port = ports.getAndIncrement();
                     ServerSocket serverSocket = new ServerSocket(port);
                     while(true){
                         s = serverSocket.accept();
@@ -47,6 +47,7 @@ public class Child {
                         clientSocket.close();
                     }
                 }catch (Exception e){
+                    System.out.println("Port " + port);
                     e.printStackTrace();
                 }
             };
