@@ -37,14 +37,14 @@ public class ReactiveChild {
                     ServerSocket serverSocket = new ServerSocket(port);
                     while(true){
                         s = serverSocket.accept();
-                        Socket clientSocket =  new Socket("localhost", servicePort);
-                        BufferedReader read = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-                        out.println(read.readLine());
-                        read.close();
-                        s.close();
-                        out.close();
-                        clientSocket.close();
+                        while(true){
+                            Socket clientSocket =  new Socket("localhost", servicePort);
+                            BufferedReader read = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                            out.println(read.readLine());
+                            read.close();
+                            clientSocket.close();
+                        }
                     }
                 }catch (Exception e){
                     System.out.println("Port " + port);
