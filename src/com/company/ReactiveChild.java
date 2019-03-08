@@ -37,11 +37,29 @@ public class ReactiveChild {
                     ServerSocket serverSocket = new ServerSocket(port);
                     while(true){
                         s = serverSocket.accept();
+                        System.out.println("New connection: " + port);
                         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                        //prev event version for current connection
+                        String prevValue = null;
                         while(true){
+                            Thread.sleep(100);
                             Socket clientSocket =  new Socket("localhost", servicePort);
                             BufferedReader read = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                            out.println(read.readLine());
+                            //read new event
+                            String readLine = read.readLine();
+                            //event could be "null" if event queue in the main thread is empty
+                            if(!readLine.equals("null")) {
+                                if(!readLine.equals(prevValue)){
+                                    out.println(readLine);
+                                    boolean closed = out.checkError();
+                                    System.out.println(readLine + " " + out.checkError());
+                                    if(closed){
+                                        System.out.println("Connection to port " + port + " closed by client");
+                                        break;
+                                    }
+                                }
+                                prevValue = readLine;
+                            }
                             read.close();
                             clientSocket.close();
                         }
