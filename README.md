@@ -10,4 +10,6 @@
 ![alt text](https://raw.githubusercontent.com/komesergey/thread-socket-test/master/network_load.png)
 
 ### Test example
-![alt text](https://raw.githubusercontent.com/komesergey/thread-socket-test/master/test.png)
+![alt text](https://raw.githubusercontent.com/komesergey/thread-socket-test/master/test_1.png)
+
+![alt text](https://raw.githubusercontent.com/komesergey/thread-socket-test/master/test_2.png)
