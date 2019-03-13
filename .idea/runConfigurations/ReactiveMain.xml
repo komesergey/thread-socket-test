@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ReactiveMain" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.company.ReactiveMain" />
+    <module name="thread-socket-test" />
+    <option name="VM_PARAMETERS" value="-Xmx10g -Xms10g -Xss2048k" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

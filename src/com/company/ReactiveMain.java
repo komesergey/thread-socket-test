@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ReactiveMain {
 
@@ -45,17 +47,23 @@ public class ReactiveMain {
             childs.add(proc.start());
         }
 
+        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         Thread thread = new Thread(() -> {
-            Socket s;
             try{
                 ServerSocket serverSocket = new ServerSocket(servicePort);
                 while(true){
-                    s = serverSocket.accept();
-                    PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-                    //take out last event as fast as possible - let child to control versioning
-                    out.println(queue.peek());
-                    out.close();
-                    s.close();
+                    final Socket s = serverSocket.accept();
+                    executor.execute(() -> {
+                        try{
+                            PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                            //take out last event as fast as possible - let child to control versioning
+                            out.println(queue.peek());
+                            out.close();
+                            s.close();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    });
                 }
             }catch (Exception e){
                 e.printStackTrace();
