@@ -11,6 +11,6 @@
 ![alt text](https://raw.githubusercontent.com/komesergey/thread-socket-test/master/network_load.png)
 
 ### Test example
-![alt text](https://raw.githubusercontent.com/komesergey/thread-socket-test/master/test_1.png)
+<img src="https://raw.githubusercontent.com/komesergey/thread-socket-test/master/test_1.png" width="550"/>
 
-![alt text](https://raw.githubusercontent.com/komesergey/thread-socket-test/master/test_2.png)
+<img src="https://raw.githubusercontent.com/komesergey/thread-socket-test/master/test_2.png" width="550"/>
